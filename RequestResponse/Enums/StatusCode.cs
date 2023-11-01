@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace RequestResponse.Enums;
 
-namespace RequestResponse.Enums
+public enum StatusCodes
 {
-    internal class StatusCode
-    {
-    }
+    Success = 200,
+    Redirection = 300,
+    BadRequest = 400,
+    Unauthorized = 401,
+    NotFound = 404,
+    ServerError = 500,
+    NotImplemented = 51,
+    Exception = 600,
 }

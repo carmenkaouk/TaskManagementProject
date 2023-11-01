@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace RequestResponse.Enums;
 
-namespace RequestResponse.Enums
+public enum RequestType
 {
-    internal class RequestType
-    {
-    }
+
+    Get,
+
+    Post,
+
+    Put
 }

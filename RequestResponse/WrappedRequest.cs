@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RequestResponse
+﻿
+namespace RequestResponse;
+public class WrappedRequest
 {
-    internal class EncryptedRequest
-    {
-    }
+
+    public byte[] EncryptedRequest;
+    public byte[] Iv;
+    public byte[] EncryptedSymmetricKey;
+
 }

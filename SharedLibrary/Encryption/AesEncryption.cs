@@ -1,12 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.Security.Cryptography;
 
-namespace SharedLibrary.Encryption
+namespace SharedLibrary.Encryption;
+
+public static class AesEncryption
 {
-    internal class AesEncryption
+    public static byte[] Encrypt(byte[] dataToEncrypt, byte[] key, byte[] iv)
     {
+        using var aes = Aes.Create();
+        aes.Key = key;
+        return aes.EncryptCbc(dataToEncrypt, iv);
+    }
+    public static byte[] Decrypt(byte[] dataToDecrypt, byte[] key, byte[] iv)
+    {
+        using var aes = Aes.Create();
+        aes.Key = key;
+        return aes.DecryptCbc(dataToDecrypt, iv);
+
+    }
+    public static void GenerateSymmetricKey(out byte[] key, out byte[] IV)
+    {
+        using (Aes aesAlg = Aes.Create())
+        {
+            aesAlg.KeySize = 256;
+            aesAlg.GenerateKey();
+            key = aesAlg.Key;
+            IV = aesAlg.IV;
+        }
+
     }
 }
+

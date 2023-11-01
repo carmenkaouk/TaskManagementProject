@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RequestResponse.Enums;
 
-namespace RequestResponse
+namespace RequestResponse;
+
+public class Response
 {
-    internal class Response
-    {
-    }
+    public Guid RequestId { get; set; }
+    public StatusCodes StatusCode { get; set; }
+
+    public object? Content;
+    public string Exception { get; set; }
 }
