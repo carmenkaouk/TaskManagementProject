@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.Ports;
+using Application.Specifications;
 using Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -40,8 +41,9 @@ internal class FileUserRepository : IRepository<User>
         _database.Users.Add(entity);
         _database.SaveChangesAsync();
     }
-    //public List<User> Filter(Specification<User> specification)
-    //{
-        
-    //}
+    public List<User> Filter(Specification<User> specification)
+    {
+        return _database.Users.Where(t => specification.IsSatisfied(t)).ToList();
+
+    }
 }

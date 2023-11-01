@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.Ports;
+using Application.Specifications;
 using Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -40,9 +41,10 @@ namespace Persistence.Repositories
             _database.SaveChangesAsync();
         }
 
-        //public List<ReportingLine> Filter(Specification<ReportingLine> specification)
-        //{
-        //    return _database.ReportingLines.Where(t => specification.IsSatisfied(t));
-        //}
+        public List<ReportingLine> Filter(Specification<ReportingLine> specification)
+        {
+            return _database.ReportingLines.Where(t => specification.IsSatisfied(t)).ToList();
+        }
     }
 }
+
