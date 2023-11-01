@@ -45,5 +45,8 @@ internal class FileTaskRepository : IRepository<TaskToDo>
         return _database.Tasks.Where(t => specification.IsSatisfied(t)).ToList();
     }
 
-
+    public int GetNextId()
+    {
+        return _database.Tasks.Count > 0 ? _database.Tasks.Max(x => x.Id) + 1 : 1;
+    }
 }

@@ -45,6 +45,10 @@ namespace Persistence.Repositories
         {
             return _database.ReportingLines.Where(t => specification.IsSatisfied(t)).ToList();
         }
+        public int GetNextId()
+        {
+            return _database.ReportingLines.Count > 0 ? _database.ReportingLines.Max(x => x.Id) + 1 : 1;
+        }
     }
 }
 

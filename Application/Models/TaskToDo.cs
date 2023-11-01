@@ -5,7 +5,7 @@ namespace Application.Models;
 
 public class TaskToDo
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public int Id { get; set; }
     [Required]
     public int AssignedUserId { get; set; }
     [Required]

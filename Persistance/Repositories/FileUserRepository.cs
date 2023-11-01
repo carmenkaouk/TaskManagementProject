@@ -46,4 +46,8 @@ internal class FileUserRepository : IRepository<User>
         return _database.Users.Where(t => specification.IsSatisfied(t)).ToList();
 
     }
+    public int GetNextId()
+    {
+        return _database.Users.Count > 0 ? _database.Users.Max(x => x.Id) + 1 : 1;
+    }
 }

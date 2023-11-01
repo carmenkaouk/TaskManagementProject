@@ -45,5 +45,10 @@ namespace Persistence.Repositories
         {
             return _database.Departments.Where(t => specification.IsSatisfied(t)).ToList();
         }
+
+        public int GetNextId()
+        {
+            return _database.Departments.Count > 0 ? _database.Departments.Max(x => x.Id) + 1 : 1;
+        }
     }
 }
