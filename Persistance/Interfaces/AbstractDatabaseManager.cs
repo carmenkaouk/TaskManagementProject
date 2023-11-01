@@ -1,16 +1,13 @@
 ﻿using Application.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Persistence.Database; 
+namespace Persistence.Interfaces;
 
-internal class Database
+public abstract class  AbstractDatabaseManager
 {
+
     public List<User> Users { get; set; }
     public List<Department> Departments { get; set; }
     public List<TaskToDo> Tasks { get; set; }
     public List<ReportingLine> ReportingLines { get; set; }
+    public abstract Task SaveChangesAsync();
 }
