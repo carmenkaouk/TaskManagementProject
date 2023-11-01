@@ -11,5 +11,5 @@ public class ReportingLine
     public int SubordinateId { get; set; }
     [Required]
     public DateOnly StartDate { get; set; }
-    public DateOnly EndDate { get; set; }
+    public DateOnly EndDate { get; set; } = DateOnly.MaxValue; 
 }
