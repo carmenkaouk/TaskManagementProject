@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "TaskMangementProject\Presentation.csproj", "{D1B9A539-30A8-490F-B4E8-A748EBF1A789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "TaskMangementProject\Presentation.csproj", "{D1B9A539-30A8-490F-B4E8-A748EBF1A789}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{2FCB85FE-27BC-4DFE-80CA-2102993B5055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{2FCB85FE-27BC-4DFE-80CA-2102993B5055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistance", "Persistance\Persistance.csproj", "{F6084E8B-2955-488D-A62A-79ABD27E3CB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance", "Persistance\Persistance.csproj", "{F6084E8B-2955-488D-A62A-79ABD27E3CB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{153E16D5-ACD5-4DB0-BE08-6FE12084E3A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", "{153E16D5-ACD5-4DB0-BE08-6FE12084E3A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{0B607595-3DA1-49AA-8797-8EDDD1C57E03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{0B607595-3DA1-49AA-8797-8EDDD1C57E03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{DB9F162A-73C0-4E84-997E-A866A57D259E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{DB9F162A-73C0-4E84-997E-A866A57D259E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestResponse", "RequestResponse\RequestResponse.csproj", "{CE166426-72C9-4043-B3BF-E44524F18CBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{DB9F162A-73C0-4E84-997E-A866A57D259E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB9F162A-73C0-4E84-997E-A866A57D259E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB9F162A-73C0-4E84-997E-A866A57D259E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE166426-72C9-4043-B3BF-E44524F18CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE166426-72C9-4043-B3BF-E44524F18CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE166426-72C9-4043-B3BF-E44524F18CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE166426-72C9-4043-B3BF-E44524F18CBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
