@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Models;
 
-namespace Application.Services.Interfaces
+namespace Application.Services.Interfaces;
+
+public interface IReportingLineService
 {
-    internal interface IReportingLineService
-    {
-    }
+    public void AddReportingLine(int userId, int? managerId);
+    public void EndReportingLine(int userId, int managerId);
+    public ReportingLine GetReportingLine(int userId, int managerId);
+    public List<ReportingLine> GetAllManagersSubordinatesHistory(int managerId);
+    public List<ReportingLine> GetAllReportingLines();
+    public List<ReportingLine> GetAllActiveReporting();
 }

@@ -25,7 +25,7 @@ public class UserValidation : IUserValidation
         }
     }
 
-    public void ValidateExistence(int id)
+    public void ValidateExistence(int? id)
     {
         var user = _userRepository.GetById(id);
         if (user == null)

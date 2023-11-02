@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using DTOs.Enums;
+using DTOs;
+using Application.Models;
 
-namespace Application.Services.Interfaces
+namespace Application.Services.Interfaces;
+
+public interface ITaskService
 {
-    internal interface ITaskService
-    {
-    }
+    Task CreatePersonalTask( NewTaskDto task);
+    Task AssignTask(int managerId, NewTaskDto task);
+    public List<TaskToDo> GetAllTasksOfSubordinates(int mangerId);
+    List<TaskDto> GetTasksOfUser(int userId);
+    Task SetTaskStatus(int userId, int taskId, Status status);
 }

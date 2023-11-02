@@ -18,17 +18,19 @@ namespace Application.Services
     {
 
         private readonly IRepository<User> _userRepository;
+        private readonly IReportingLineService _reportingLineService;
         private readonly IRepository<Department> _departmentRepository;
         private readonly IUserValidation _userValidation;
         private readonly IDepartmentValidation _departmentValidation;
 
-        public UserService(IRepository<User> userRepository, IUserValidation userValidation, IDepartmentValidation departmentValidation, IRepository<Department> departmentRepository)
+        public UserService(IRepository<User> userRepository, ReportingLineService reportingLineService, IUserValidation userValidation, IDepartmentValidation departmentValidation, IRepository<Department> departmentRepository)
         {
 
             _userRepository = userRepository;
             _userValidation = userValidation;
             _departmentValidation = departmentValidation;
             _departmentRepository = departmentRepository;
+            _reportingLineService = reportingLineService;
 
         }
         public async Task CreateUser(NewUserDto userInfo)
@@ -44,6 +46,7 @@ namespace Application.Services
 
             User newUser = new User()
             {
+                Id = _userRepository.GetNextId(),
                 Username = userInfo.Username,
                 FirstName = userInfo.FirstName,
                 LastName = userInfo.LastName,
@@ -55,6 +58,8 @@ namespace Application.Services
             };
 
             _userRepository.Add(newUser);
+            if (userInfo.ManagerId != null)
+                _reportingLineService.AddReportingLine(newUser.Id, newUser.ManagerId);
             await _userRepository.SaveChangesAsync();
         }
         public List<UserDto> GetAllUsers()
@@ -81,7 +86,7 @@ namespace Application.Services
         }
         public async Task BlockUser(int userId)
         {
-             _userValidation.ValidateExistence(userId);
+            _userValidation.ValidateExistence(userId);
             var user = _userRepository.GetById(userId);
             user.IsBlocked = true;
             _userRepository.Update(user);
@@ -92,17 +97,23 @@ namespace Application.Services
             _userValidation.ValidateExistence(userId);
             _userValidation.ValidateIsManager(managerId);
 
-            var user= _userRepository.GetById(userId);
+            var user = _userRepository.GetById(userId);
+            if(user.ManagerId!= null)
+            {
+                _reportingLineService.EndReportingLine(userId, managerId); 
 
+            }
             user.ManagerId = managerId;
-
             _userRepository.Update(user);
+            if (managerId != null)
+                _reportingLineService.AddReportingLine(userId, managerId);
+
             await _userRepository.SaveChangesAsync();
         }
 
         public async Task ChangePassword(int userId, string newPassword)
         {
-           _userValidation.ValidateExistence(userId);
+            _userValidation.ValidateExistence(userId);
             var newPasswordHash = HashingService.ComputeSHA256Hash(newPassword);
             var user = _userRepository.GetById(userId);
             user.PasswordHash = newPasswordHash;
