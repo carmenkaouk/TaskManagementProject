@@ -4,5 +4,5 @@ namespace Client.Interfaces;
 
 public interface IRequestSender
 {
-    Response SendRequest(Request request);  
+    Task<Response> SendRequest(Request request);  
 }

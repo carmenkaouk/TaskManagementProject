@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Client.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RequestResponse;
 using SharedLibrary.Encryption;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Client.RequestSender;
 
-public class FileRequestSender
+public class FileRequestSender : IRequestSender
 {
     private readonly IConfiguration _configuration;
     private readonly IFileService _fileService;
