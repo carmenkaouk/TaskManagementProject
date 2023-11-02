@@ -5,12 +5,7 @@ using Application.Specifications.UserSpecifications;
 using Application.Validation.Interfaces;
 using DTOs;
 using DTOs.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+
 
 namespace Application.Services
 {
@@ -23,7 +18,7 @@ namespace Application.Services
         private readonly IUserValidation _userValidation;
         private readonly IDepartmentValidation _departmentValidation;
 
-        public UserService(IRepository<User> userRepository, ReportingLineService reportingLineService, IUserValidation userValidation, IDepartmentValidation departmentValidation, IRepository<Department> departmentRepository)
+        public UserService(IRepository<User> userRepository, IReportingLineService reportingLineService, IUserValidation userValidation, IDepartmentValidation departmentValidation, IRepository<Department> departmentRepository)
         {
 
             _userRepository = userRepository;
