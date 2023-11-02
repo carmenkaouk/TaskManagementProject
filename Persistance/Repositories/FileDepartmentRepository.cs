@@ -20,7 +20,6 @@ namespace Persistence.Repositories
         public void Add(Department entity)
         {
             _database.Departments.Add(entity);
-            _database.SaveChangesAsync();
         }
 
         public List<Department> GetAll()
@@ -28,7 +27,7 @@ namespace Persistence.Repositories
             return _database.Departments;
         }
 
-        public Department GetById(int id)
+        public Department? GetById(int? id)
         {
             return _database.Departments.FirstOrDefault(t => t.Id == id);
         }
@@ -38,7 +37,6 @@ namespace Persistence.Repositories
             var old = _database.Departments.FirstOrDefault(t => t.Id == entity.Id);
             _database.Departments.Remove(old);
             _database.Departments.Add(entity);
-            _database.SaveChangesAsync();
         }
 
         public List<Department> Filter(Specification<Department> specification)
@@ -49,6 +47,11 @@ namespace Persistence.Repositories
         public int GetNextId()
         {
             return _database.Departments.Count > 0 ? _database.Departments.Max(x => x.Id) + 1 : 1;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _database.SaveChangesAsync();
         }
     }
 }

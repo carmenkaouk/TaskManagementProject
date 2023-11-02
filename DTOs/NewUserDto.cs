@@ -17,7 +17,7 @@ public class NewUserDto
     public string Title { get; set; }
     [Required]
     public int DepartmentId { get; set; }
-    public string? ManagerUsername { get; set; }
+    public int? ManagerId { get; set; }
     [Required]
     public UserRole Role { get; set; }
 }

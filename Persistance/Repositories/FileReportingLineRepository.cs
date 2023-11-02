@@ -20,7 +20,6 @@ namespace Persistence.Repositories
         public void Add(ReportingLine entity)
         {
             _database.ReportingLines.Add(entity);
-            _database.SaveChangesAsync();
         }
 
         public List<ReportingLine> GetAll()
@@ -28,7 +27,7 @@ namespace Persistence.Repositories
             return _database.ReportingLines;
         }
 
-        public ReportingLine GetById(int id)
+        public ReportingLine? GetById(int? id)
         {
             return _database.ReportingLines.FirstOrDefault(t => t.Id == id);
         }
@@ -38,7 +37,6 @@ namespace Persistence.Repositories
             var old = _database.ReportingLines.FirstOrDefault(t => t.Id == entity.Id);
             _database.ReportingLines.Remove(old);
             _database.ReportingLines.Add(entity);
-            _database.SaveChangesAsync();
         }
 
         public List<ReportingLine> Filter(Specification<ReportingLine> specification)
@@ -48,6 +46,11 @@ namespace Persistence.Repositories
         public int GetNextId()
         {
             return _database.ReportingLines.Count > 0 ? _database.ReportingLines.Max(x => x.Id) + 1 : 1;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _database.SaveChangesAsync();
         }
     }
 }

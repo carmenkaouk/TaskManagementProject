@@ -20,7 +20,6 @@ internal class FileTaskRepository : IRepository<TaskToDo>
     public void Add(TaskToDo entity)
     {
         _database.Tasks.Add(entity);
-        _database.SaveChangesAsync();
     }
 
     public List<TaskToDo> GetAll()
@@ -28,7 +27,7 @@ internal class FileTaskRepository : IRepository<TaskToDo>
         return _database.Tasks;
     }
 
-    public TaskToDo GetById(int id)
+    public TaskToDo? GetById(int? id)
     {
         return _database.Tasks.FirstOrDefault(t => t.Id.Equals(id));
     }
@@ -38,7 +37,6 @@ internal class FileTaskRepository : IRepository<TaskToDo>
         var old = _database.Tasks.FirstOrDefault(t => t.Id.Equals(entity.Id));
         _database.Tasks.Remove(old);
         _database.Tasks.Add(entity);
-        _database.SaveChangesAsync();
     }
     public List<TaskToDo> Filter(Specification<TaskToDo> specification)
     {
@@ -48,5 +46,10 @@ internal class FileTaskRepository : IRepository<TaskToDo>
     public int GetNextId()
     {
         return _database.Tasks.Count > 0 ? _database.Tasks.Max(x => x.Id) + 1 : 1;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _database.SaveChangesAsync();
     }
 }

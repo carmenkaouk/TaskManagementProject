@@ -21,7 +21,6 @@ internal class FileUserRepository : IRepository<User>
     public void Add(User entity)
     {
         _database.Users.Add(entity);
-        _database.SaveChangesAsync();
     }
 
     public List<User> GetAll()
@@ -29,7 +28,7 @@ internal class FileUserRepository : IRepository<User>
         return _database.Users;
     }
 
-    public User GetById(int id)
+    public User? GetById(int? id)
     {
         return _database.Users.FirstOrDefault(t => t.Id == id);
     }
@@ -39,7 +38,6 @@ internal class FileUserRepository : IRepository<User>
         var old = _database.Users.FirstOrDefault(t => t.Id == entity.Id);
         _database.Users.Remove(old);
         _database.Users.Add(entity);
-        _database.SaveChangesAsync();
     }
     public List<User> Filter(Specification<User> specification)
     {
@@ -49,5 +47,10 @@ internal class FileUserRepository : IRepository<User>
     public int GetNextId()
     {
         return _database.Users.Count > 0 ? _database.Users.Max(x => x.Id) + 1 : 1;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _database.SaveChangesAsync();
     }
 }

@@ -17,7 +17,7 @@ public class User
     public string Title { get; set; }
     [Required]
     public int DepartmentId { get; set; }
-    public int ManagerId { get; set; }
+    public int? ManagerId { get; set; }
     [Required]
     public string PasswordHash { get; set; }
     public bool IsBlocked { get; set; }

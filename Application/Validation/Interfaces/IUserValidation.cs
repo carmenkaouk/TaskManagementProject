@@ -10,7 +10,7 @@ namespace Application.Validation.Interfaces
     public interface IUserValidation
     {
         void ValidateUsername(string username);
-        void ValidateIsManager(int id);
+        void ValidateIsManager(int? id);
         void ValidateExistence(int id);
         void ValidateUserManager(int managerID, int userId);
     }

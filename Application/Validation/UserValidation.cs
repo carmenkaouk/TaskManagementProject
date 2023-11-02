@@ -33,7 +33,7 @@ public class UserValidation : IUserValidation
             throw new Exception($"User with id {id} does not exist");
         }
     }
-    public void ValidateIsManager(int id)
+    public void ValidateIsManager(int? id)
     {
        ValidateExistence(id);
         var user =_userRepository.GetById(id);
