@@ -8,5 +8,5 @@ public class Response
     public StatusCodes StatusCode { get; set; }
 
     public object? Content;
-    public string Exception { get; set; }
+    public string ExceptionMessage { get; set; }
 }
