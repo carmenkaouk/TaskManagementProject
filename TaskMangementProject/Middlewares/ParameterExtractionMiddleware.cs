@@ -37,7 +37,7 @@ namespace Presentation.Middlewares
                 }
             }
             fileContext.Add("Parameters", parameters.ToArray()); 
-            return _next.ProcessRequest(fileContext);
+            return _next.ProcessRequest(fileContext);   
         }
     }
 }

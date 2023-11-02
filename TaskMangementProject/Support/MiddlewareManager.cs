@@ -1,5 +1,6 @@
-﻿
-namespace Presentation.Middlewares;
+﻿using Presentation.Middlewares;
+
+namespace Presentation.Support;
 
 public class MiddleWareManager
 {
