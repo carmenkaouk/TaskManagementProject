@@ -18,16 +18,18 @@ public static class AesEncryption
         return aes.DecryptCbc(dataToDecrypt, iv);
 
     }
-    public static void GenerateSymmetricKey(out byte[] key, out byte[] IV)
+    public static (byte[] key, byte[] IV) GenerateSymmetricKey()
     {
+        byte[] key;
+        byte[] iv;
         using (Aes aesAlg = Aes.Create())
         {
             aesAlg.KeySize = 256;
             aesAlg.GenerateKey();
             key = aesAlg.Key;
-            IV = aesAlg.IV;
+            iv = aesAlg.IV;
         }
-
+        return (key, iv);
     }
 }
 

@@ -3,6 +3,7 @@
 public interface IFileService
 {
     Task<string> ReadFile(string? path);
+    Task<byte[]> ReadByteArray(string? path);
     Task WriteFile(string? path, string text);
     void ValidatePath(string? path);
     void CreateFile(string path);
@@ -15,6 +16,15 @@ public class FileService : IFileService
     {
         if (File.Exists(path))
             return await File.ReadAllTextAsync(path);
+        else
+            throw new FileNotFoundException();
+
+    }
+
+    public async Task<byte[]> ReadByteArray(string? path)
+    {
+        if (File.Exists(path))
+            return await File.ReadAllBytesAsync(path);
         else
             throw new FileNotFoundException();
 
