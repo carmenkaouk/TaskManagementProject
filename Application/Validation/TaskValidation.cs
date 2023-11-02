@@ -13,7 +13,7 @@ public class TaskValidation : ITaskValidation
         _taskRepository = taskRepository;
         _userValidation = userValidation;
     }
-    public void ValidateExistance(int id)
+    public void ValidateExistence(int id)
     {
         var task = _taskRepository.GetById(id);
         if (task == null)
@@ -23,8 +23,8 @@ public class TaskValidation : ITaskValidation
     }
     public void ValidateTaskIsOwnedByUser(int userId, int taskId)
     {
-        _userValidation.ValidateExistance(userId);
-        ValidateExistance(taskId);
+        _userValidation.ValidateExistence(userId);
+        ValidateExistence(taskId);
         var task = _taskRepository.GetById(taskId);
         
         if (task.AssignedUserId != userId)

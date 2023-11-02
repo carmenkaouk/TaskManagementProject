@@ -11,7 +11,7 @@ namespace Application.Validation.Interfaces
     {
         void ValidateUsername(string username);
         void ValidateIsManager(int id);
-        void ValidateExistance(int id);
+        void ValidateExistence(int id);
         void ValidateUserManager(int managerID, int userId);
     }
 }

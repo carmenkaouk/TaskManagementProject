@@ -9,7 +9,7 @@ namespace Application.Validation.Interfaces
 {
     public interface ITaskValidation
     {
-        void ValidateExistance(int id);
-        void ValidateTaskOwner(int userId, int taskId);
+        void ValidateExistence(int id);
+        void ValidateTaskIsOwnedByUser(int userId, int taskId);
     }
 }
