@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.UserSpecifications
 {
-    public class UserNameSpecification : Specification<User>
+    public class UsernameSpecification : Specification<User>
     {
-        private readonly string _userName; 
-        public UserNameSpecification(string userName)
+        private readonly string _username; 
+        public UsernameSpecification(string username)
         {
-            _userName = userName;
+            _username = username;
         }
         public override Expression<Func<User, bool>> ToExpression()
         {
-            return (user) => user.Username == _userName;
+            return (user) => user.Username == _username;
 
         }
     }

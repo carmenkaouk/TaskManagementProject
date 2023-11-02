@@ -18,7 +18,7 @@ public class UserValidation : IUserValidation
     }
     public void ValidateUsername(string username)
     {
-        var user = _userRepository.Filter(new UserNameSpecification(username)).FirstOrDefault();
+        var user = _userRepository.Filter(new UsernameSpecification(username)).FirstOrDefault();
         if (user != null)
         {
             throw new Exception("Cannot use duplicate username");

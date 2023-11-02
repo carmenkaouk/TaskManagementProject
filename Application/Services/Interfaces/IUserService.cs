@@ -10,6 +10,7 @@ namespace Application.Services.Interfaces
 {
     public interface IUserService
     {
+        public UserDto Login(string username, string password); 
         public Task CreateUser(NewUserDto user);
         public List<UserDto> GetAllUsers();
         public Task BlockUser(int userId);

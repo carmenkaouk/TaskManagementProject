@@ -5,12 +5,7 @@ using Application.Specifications.UserSpecifications;
 using Application.Validation.Interfaces;
 using DTOs;
 using DTOs.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+
 
 namespace Application.Services
 {
@@ -22,8 +17,9 @@ namespace Application.Services
         private readonly IRepository<Department> _departmentRepository;
         private readonly IUserValidation _userValidation;
         private readonly IDepartmentValidation _departmentValidation;
+        private readonly IHashingService _hashingService;
 
-        public UserService(IRepository<User> userRepository, ReportingLineService reportingLineService, IUserValidation userValidation, IDepartmentValidation departmentValidation, IRepository<Department> departmentRepository)
+        public UserService(IRepository<User> userRepository, IReportingLineService reportingLineService, IUserValidation userValidation, IDepartmentValidation departmentValidation, IRepository<Department> departmentRepository, IHashingService hashingService)
         {
 
             _userRepository = userRepository;
@@ -31,8 +27,35 @@ namespace Application.Services
             _departmentValidation = departmentValidation;
             _departmentRepository = departmentRepository;
             _reportingLineService = reportingLineService;
+            _hashingService = hashingService;
+        }
+
+
+        public UserDto Login(string username, string password)
+        {
+            var user = _userRepository.Filter(new UsernameSpecification(username)).FirstOrDefault();
+            if (user == null)
+                throw new Exception($"User with username {username} not found");
+
+            var hashedPassword = _hashingService.Hash(password);
+
+            if (!user.PasswordHash.Equals(hashedPassword))
+                throw new Exception($"User with username {username} not found");
+
+            return new UserDto
+            {
+                Name = user.FirstName + " " + user.LastName,
+                UserId = user.Id,
+                DepartmentName = _departmentRepository.GetById(user.DepartmentId).Name,
+                ManagerName = _userRepository.GetById(user.ManagerId).FirstName + " " + _userRepository.GetById(user.ManagerId).LastName,
+                Title = user.Title
+            };
 
         }
+
+
+
+
         public async Task CreateUser(NewUserDto userInfo)
         {
             _userValidation.ValidateUsername(userInfo.Username);
@@ -53,7 +76,7 @@ namespace Application.Services
                 DepartmentId = userInfo.DepartmentId,
                 ManagerId = userInfo.ManagerId,
                 Title = userInfo.Title,
-                PasswordHash = HashingService.ComputeSHA256Hash(userInfo.Password),
+                PasswordHash = _hashingService.Hash(userInfo.Password),
                 Role = userInfo.Role
             };
 
@@ -98,9 +121,9 @@ namespace Application.Services
             _userValidation.ValidateIsManager(managerId);
 
             var user = _userRepository.GetById(userId);
-            if(user.ManagerId!= null)
+            if (user.ManagerId != null)
             {
-                _reportingLineService.EndReportingLine(userId, managerId); 
+                _reportingLineService.EndReportingLine(userId, managerId);
 
             }
             user.ManagerId = managerId;
@@ -114,7 +137,7 @@ namespace Application.Services
         public async Task ChangePassword(int userId, string newPassword)
         {
             _userValidation.ValidateExistence(userId);
-            var newPasswordHash = HashingService.ComputeSHA256Hash(newPassword);
+            var newPasswordHash = _hashingService.Hash(newPassword);
             var user = _userRepository.GetById(userId);
             user.PasswordHash = newPasswordHash;
             _userRepository.Update(user);
@@ -122,7 +145,7 @@ namespace Application.Services
         }
         public List<UserDto> GetUsersByName(string name)
         {
-            return _userRepository.Filter(new UserNameSpecification(name)).Select(user => new UserDto
+            return _userRepository.Filter(new UsernameSpecification(name)).Select(user => new UserDto
             {
                 Name = user.FirstName + " " + user.LastName,
                 UserId = user.Id,
