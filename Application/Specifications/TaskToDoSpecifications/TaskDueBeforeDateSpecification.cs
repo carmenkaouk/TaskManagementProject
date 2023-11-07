@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.TaskToDoSpecification
 {
-    internal class TaskDueBeforeDateSpecification: Specification<TaskToDo>
+    public class TaskDueBeforeDateSpecification: Specification<TaskToDo>
     {
         private readonly DateTime _dueDate;
         public TaskDueBeforeDateSpecification(DateTime dueDate)

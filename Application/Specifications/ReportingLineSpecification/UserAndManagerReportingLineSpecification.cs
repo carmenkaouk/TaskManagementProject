@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.ReportingLineSpecification
 {
-    internal class UserAndManagerReportingLineSpecification: Specification<ReportingLine>
+    public class UserAndManagerReportingLineSpecification: Specification<ReportingLine>
     {
         private readonly int? _managerId;
         private readonly int? _subordinateId; 
-        public UserAndManagerReportingLineSpecification(int? managerId, int?subordinateId)
+        public UserAndManagerReportingLineSpecification(int? managerId, int? subordinateId)
         {
             _managerId = managerId;
             _subordinateId = subordinateId;

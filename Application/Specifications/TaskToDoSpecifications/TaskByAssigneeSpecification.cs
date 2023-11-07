@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.TaskToDoSpecification
 {
-    internal class TaskByAssigneeSpecification: Specification<TaskToDo>
+    public class TaskByAssigneeSpecification: Specification<TaskToDo>
     {
         private readonly int _assigneeId; 
         public TaskByAssigneeSpecification(int assigneeId)

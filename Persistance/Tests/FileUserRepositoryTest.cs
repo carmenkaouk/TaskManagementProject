@@ -1,5 +1,7 @@
 ﻿using Application.Models;
 using Application.Specifications;
+using Application.Specifications.DepartmentSpecifications;
+using Application.Specifications.UserSpecifications;
 using Moq;
 using NUnit.Framework;
 using Persistence.Interfaces;
@@ -356,11 +358,215 @@ namespace Persistence.Tests
         }
 
         [Test]
-        public void FilterDepartmentTest()
+        public void FilterActiveUserTest()
         {
-           
+            var user1 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = false,
+                Role = Employee
+            };
+
+            var user2 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = true,
+                Role = Employee
+            };
+
+            userRepository.Add(user1);
+            userRepository.Add(user2);
+            var specification = new ActiveUsersSpecification();
+
+            var filteredusers = userRepository.Filter(specification);
+
+
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+
         }
-        
+
+        [Test]
+        public void FilterUsersByDepartmentTest()
+        {
+            var user1 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = false,
+                Role = Employee
+            };
+
+            var user2 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 2,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = false,
+                Role = Employee
+            };
+
+            userRepository.Add(user1);
+            userRepository.Add(user2);
+            var specification = new UserDepartmentSpecification(1);
+
+            var filteredusers = userRepository.Filter(specification);
+
+
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+
+        }
+
+        [Test]
+        public void FilterUsersByUserNameTest()
+        {
+            var user1 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = false,
+                Role = Employee
+            };
+
+            var user2 = new User
+            {
+                Id = 2,
+                Username = "Test1",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = true,
+                Role = Employee
+            };
+
+            userRepository.Add(user1);
+            userRepository.Add(user2);
+            var specification = new UsernameSpecification("Test");
+
+            var filteredusers = userRepository.Filter(specification);
+
+
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+
+        }
+
+        [Test]
+        public void FilterUsersByRoleTest()
+        {
+            var user1 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = false,
+                Role = Employee
+            };
+
+            var user2 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = true,
+                Role = Administrator
+            };
+
+            userRepository.Add(user1);
+            userRepository.Add(user2);
+            var specification = new UserRoleSpecification(Employee);
+
+            var filteredusers = userRepository.Filter(specification);
+
+
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+
+        }
+
+        [Test]
+        public void FilterUsersByTitleTest()
+        {
+            var user1 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Junior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = false,
+                Role = Employee
+            };
+
+            var user2 = new User
+            {
+                Id = 2,
+                Username = "Test",
+                FirstName = "Joe",
+                LastName = "Doe",
+                Title = "Senior",
+                DepartmentId = 1,
+                ManagerId = 1,
+                PasswordHash = "boo",
+                IsBlocked = true,
+                Role = Employee
+            };
+
+            userRepository.Add(user1);
+            userRepository.Add(user2);
+            var specification = new UserTitleSpecification("Junior");
+
+            var filteredusers = userRepository.Filter(specification);
+
+
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+
+        }
+
         [Test]
         public void GetNextUserIdTest()
         {

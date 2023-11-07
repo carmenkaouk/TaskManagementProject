@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.Specifications;
+using Application.Specifications.DepartmentSpecifications;
 using Moq;
 using NUnit.Framework;
 using Persistence.Interfaces;
@@ -71,19 +72,22 @@ namespace Persistence.Tests
 
         [Test]
         public void FilterDepartmentTest() {
-            var specificationMock = new Mock<Specification<Department>>();
 
-            specificationMock.Setup(spec => spec.IsSatisfied(It.IsAny<Department>())).Returns((Department d) => d.Name == "It");
+            var department1 = new Department { Id = 1, Name = "IT" };
+            var department2 = new Department { Id = 2, Name = "HR" };
+            var department3 = new Department { Id = 3, Name = "Finance" };
 
-            var itDepartment = new Department { Id = 1, Name = "It" };
-            var ManagementDepartment = new Department { Id = 2, Name = "Management" };
-            departmentRepository.Add(itDepartment);
-            departmentRepository.Add(ManagementDepartment);
+            departmentRepository.Add(department1);
+            departmentRepository.Add(department2);
+            departmentRepository.Add(department3);
+
+            var specification = new DepartmentNameSpecification("HR");
+
+            var filteredDepartments = departmentRepository.Filter(specification);
 
 
-            var departments =  departmentRepository.Filter(specificationMock.Object);
-
-            Assert.That(departments.Count,Is.EqualTo(1));
+            Assert.That(filteredDepartments.Count, Is.EqualTo(1));
+        
         }
         
 

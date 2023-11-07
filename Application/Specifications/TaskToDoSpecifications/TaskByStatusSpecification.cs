@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.TaskToDoSpecification
 {
-    internal class TaskByStatusSpecification: Specification<TaskToDo>
+    public class TaskByStatusSpecification: Specification<TaskToDo>
     {
         private readonly Status _status; 
         public TaskByStatusSpecification(Status status)

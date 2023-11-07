@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.TaskToDoSpecification
 {
-    internal class TasksAssignedAfterDateSpecification: Specification<TaskToDo>
+    public class TasksAssignedAfterDateSpecification: Specification<TaskToDo>
     {
         private readonly DateTime _assignmentDate;
         public TasksAssignedAfterDateSpecification(DateTime assignmentDate)

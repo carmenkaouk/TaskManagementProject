@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.TaskToDoSpecification
 {
-    internal class TaskByUserSpecification: Specification<TaskToDo>
+    public class TaskByUserSpecification: Specification<TaskToDo>
     {
         private readonly int _userId;
         public TaskByUserSpecification(int userId)

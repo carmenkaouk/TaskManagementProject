@@ -1,4 +1,6 @@
 ﻿using Application.Models;
+using Application.Specifications.ReportingLineSpecification;
+using Application.Specifications.UserSpecifications;
 using Moq;
 using NUnit.Framework;
 using Persistence.Interfaces;
@@ -41,7 +43,7 @@ namespace Persistence.Tests
         }
 
         [Test]
-        public void GetAllDepartmentsTest()
+        public void GetAllReportingLinesTest()
         {
             var reportingLine = new ReportingLine
             {
@@ -59,7 +61,7 @@ namespace Persistence.Tests
 
         [Test]
 
-        public void GetDepartmentByIdTest()
+        public void GetReportingLineByIdTest()
         {
             var reportingLine = new ReportingLine
             {
@@ -111,23 +113,90 @@ namespace Persistence.Tests
 
         }
 
-        /*[Test]
-        public void FilterDepartmentTest() {
-            var specificationMock = new Mock<Specification<Department>>();
+        [Test]
+        public void FilterActiveReportingLineTest() {
+            var firstReportingLine = new ReportingLine
+            {
+                Id = 1,
+                ManagerId = 100,
+                SubordinateId = 200,
+                StartDate = DateOnly.FromDateTime(new DateTime(2023, 1, 1)),
+            };
 
-            specificationMock.Setup(spec => spec.IsSatisfied(It.IsAny<Department>())).Returns((Department d) => d.Name == "It");
+            var secondReportingLine = new ReportingLine
+            {
+                Id = 1,
+                ManagerId = 101,
+                SubordinateId = 200,
+                StartDate = DateOnly.FromDateTime(new DateTime(2023, 1, 1)),
+                EndDate= DateOnly.FromDateTime(new DateTime(2023,2,1))
+            };
 
-            var itDepartment = new Department { Id = 1, Name = "It" };
-            var ManagementDepartment = new Department { Id = 2, Name = "Management" };
-            departmentRepository.Add(itDepartment);
-            departmentRepository.Add(ManagementDepartment);
+            reportingLineRepository.Add(firstReportingLine);
+            reportingLineRepository.Add(secondReportingLine);
+            var specification = new ActiveReportingLineSpecification();
+
+            var filteredusers = reportingLineRepository.Filter(specification);
 
 
-            var departments =  departmentRepository.Filter(specificationMock.Object);
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+        }
+        [Test]
+        public void FilterReportingLineManagerTest()
+        {
+            var firstReportingLine = new ReportingLine
+            {
+                Id = 1,
+                ManagerId = 100,
+                SubordinateId = 200,
+                StartDate = DateOnly.FromDateTime(new DateTime(2023, 1, 1)),
+            };
 
-            Assert.That(departments.Count,Is.EqualTo(1));
-        }*/
+            var secondReportingLine = new ReportingLine
+            {
+                Id = 1,
+                ManagerId = 102,
+                SubordinateId = 200,
+                StartDate = DateOnly.FromDateTime(new DateTime(2023, 1, 1)),
+              
+            };
 
+            reportingLineRepository.Add(firstReportingLine);
+            reportingLineRepository.Add(secondReportingLine);
+            var specification = new ReportingLineManagerSpecification(100);
+
+            var filteredusers = reportingLineRepository.Filter(specification);
+
+
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+        }
+        [Test]
+        public void FilterReportingLineByUserAndManagerTest()
+        {
+            var firstReportingLine = new ReportingLine
+            {
+                Id = 1,
+                ManagerId = 100,
+                SubordinateId = 201,
+                StartDate = DateOnly.FromDateTime(new DateTime(2023, 1, 1)),
+            };
+
+            var secondReportingLine = new ReportingLine
+            {
+                Id = 2,
+                ManagerId = 102,
+                SubordinateId = 200,
+                StartDate = DateOnly.FromDateTime(new DateTime(2023, 1, 1)),
+
+            };
+
+            reportingLineRepository.Add(firstReportingLine);
+            reportingLineRepository.Add(secondReportingLine);
+
+           var  specification = new UserAndManagerReportingLineSpecification(100, 201);
+           var filteredusers = reportingLineRepository.Filter(specification);
+            Assert.That(filteredusers.Count, Is.EqualTo(1));
+        }
 
         [Test]
         public void GetNextDepartmentIdTest()
