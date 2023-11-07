@@ -27,7 +27,7 @@ public class ReportingLineService : IReportingLineService
     }
 
     public ReportingLine GetReportingLine(int userId, int managerId) {
-        return _reportingLineRepository.Filter(new UserAndManagerReportingLineSpecification(userId, managerId)).FirstOrDefault(); 
+        return _reportingLineRepository.Filter(new UserAndManagerReportingLineSpecification(managerId, userId)).FirstOrDefault(); 
     }
 
     public void EndReportingLine(int userId, int managerId)
