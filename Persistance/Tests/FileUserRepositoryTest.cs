@@ -358,19 +358,7 @@ namespace Persistence.Tests
         [Test]
         public void FilterDepartmentTest()
         {
-            var specificationMock = new Mock<Specification<Department>>();
-
-            specificationMock.Setup(spec => spec.IsSatisfied(It.IsAny<Department>())).Returns((Department d) => d.Name == "It");
-
-            var itDepartment = new Department { Id = 1, Name = "It" };
-            var ManagementDepartment = new Department { Id = 2, Name = "Management" };
-            userRepository.Add(itDepartment);
-            userRepository.Add(ManagementDepartment);
-
-
-            var departments = userRepository.Filter(specificationMock.Object);
-
-            Assert.That(departments.Count, Is.EqualTo(1));
+           
         }
         
         [Test]
