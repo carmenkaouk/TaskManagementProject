@@ -17,7 +17,7 @@ public class EndpointMiddleware : Middleware
         if (result is Task taskResult)
         {
             taskResult.GetAwaiter().GetResult();
-            responseContent = taskResult;
+            responseContent = taskResult.GetType().IsGenericType ? taskResult.GetType().GetProperty("Result").GetValue(taskResult) : null; ;
         }
         Response response = new Response { RequestId = ((Request)fileContext.data["Request"]).RequestId, StatusCode = StatusCodes.Success, Content = responseContent };
         return response;

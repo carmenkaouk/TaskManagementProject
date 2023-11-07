@@ -16,5 +16,5 @@ public abstract class Middleware
         _next = next;
         return _next; 
     }
-    public abstract  Response ProcessRequest(FileContext fileContext); 
+    public abstract Response ProcessRequest(FileContext fileContext); 
 }

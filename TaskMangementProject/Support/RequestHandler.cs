@@ -84,7 +84,6 @@ public class RequestHandler
             }
             catch (IOException ex)
             {
-                Console.Write(ex);
                 await Task.Delay(100);
             }
         }

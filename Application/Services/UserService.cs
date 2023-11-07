@@ -93,7 +93,7 @@ namespace Application.Services
                 Name = user.FirstName + " " + user.LastName,
                 UserId = user.Id,
                 DepartmentName = _departmentRepository.GetById(user.DepartmentId).Name,
-                ManagerName = _userRepository.GetById(user.ManagerId).FirstName + " " + _userRepository.GetById(user.ManagerId).LastName,
+                ManagerName = _userRepository.GetById(user.ManagerId)?.FirstName + " " + _userRepository.GetById(user.ManagerId)?.LastName,
                 Title = user.Title
             }).ToList();
         }
@@ -150,7 +150,7 @@ namespace Application.Services
                 Name = user.FirstName + " " + user.LastName,
                 UserId = user.Id,
                 DepartmentName = _departmentRepository.GetById(user.DepartmentId).Name,
-                ManagerName = _userRepository.GetById(user.ManagerId).FirstName + " " + _userRepository.GetById(user.ManagerId).LastName,
+                ManagerName = _userRepository.GetById(user.ManagerId)?.FirstName + " " + _userRepository.GetById(user.ManagerId)?.LastName,
                 Title = user.Title
             }).ToList();
 
@@ -162,7 +162,7 @@ namespace Application.Services
                 Name = user.FirstName + " " + user.LastName,
                 UserId = user.Id,
                 DepartmentName = _departmentRepository.GetById(user.DepartmentId).Name,
-                ManagerName = _userRepository.GetById(user.ManagerId).FirstName + " " + _userRepository.GetById(user.ManagerId).LastName,
+                ManagerName = _userRepository.GetById(user.ManagerId)?.FirstName + " " + _userRepository.GetById(user.ManagerId)?.LastName,
                 Title = user.Title
             }).ToList();
         }
@@ -173,7 +173,7 @@ namespace Application.Services
                 Name = user.FirstName + " " + user.LastName,
                 UserId = user.Id,
                 DepartmentName = _departmentRepository.GetById(user.DepartmentId).Name,
-                ManagerName = _userRepository.GetById(user.ManagerId).FirstName + " " + _userRepository.GetById(user.ManagerId).LastName,
+                ManagerName = _userRepository.GetById(user.ManagerId)?.FirstName + " " + _userRepository.GetById(user.ManagerId)?.LastName,
                 Title = user.Title
             }).ToList();
         }
@@ -184,7 +184,7 @@ namespace Application.Services
                 Name = user.FirstName + " " + user.LastName,
                 UserId = user.Id,
                 DepartmentName = _departmentRepository.GetById(user.DepartmentId).Name,
-                ManagerName = _userRepository.GetById(user.ManagerId).FirstName + " " + _userRepository.GetById(user.ManagerId).LastName,
+                ManagerName = _userRepository.GetById(user.ManagerId)?.FirstName + " " + _userRepository.GetById(user.ManagerId)?.LastName,
                 Title = user.Title
             }).ToList();
         }

@@ -21,4 +21,18 @@ var serviceProvider = new ServiceCollection()
             .BuildServiceProvider();
 Type type = Assembly.GetExecutingAssembly().GetType("Client.Controllers.UserController");
 var userController =(UserController) serviceProvider.GetService(type);
-var dto = await userController.Login("fatouma", "lolo"); 
+
+
+var dto = await userController.Login("fatouma", "touma");
+
+Console.WriteLine(dto.Name + " " + dto.DepartmentName);
+
+//await userController.CreateUser(new NewUserDto { Username = "ckaouk", FirstName = "Carmen", LastName = "Kaouk", DepartmentId = 1, Password = "256gt78ui", Role = DTOs.Enums.UserRole.Employee},"fatouma");
+//var users = await userController.GetAllUsers("fatouma");
+//await userController.BlockUser(2, "fatouma");
+//await userController.ChangePassword(1, "touma","fatouma");
+var users = await userController.GetUsersByDepartment(1, "fatouma");
+foreach (var user in users)
+{
+    Console.WriteLine(user.Name + " "+user.DepartmentName);
+}
