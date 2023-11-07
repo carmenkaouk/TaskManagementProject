@@ -10,6 +10,7 @@ namespace Application.Services.Interfaces
     public interface IDepartmentService
     {
         List<Department> GetAllDepartments();
+        List<Department> GetAllDepartmentsByName(string departmentName);
         Task CreateDepartment(string departmentName);
     }
 }

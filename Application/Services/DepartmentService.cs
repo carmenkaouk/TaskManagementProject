@@ -1,5 +1,7 @@
 ﻿using Application.Models;
 using Application.Ports;
+using Application.Specifications.DepartmentSpecifications;
+using Application.Specifications.ReportingLineSpecification;
 using Application.Validation.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,12 @@ namespace Application.Services
             var departments = _departmentRepository.GetAll();
             return departments.Select(department => new Department { Name = department.Name }).ToList();
         }
+
+        public List<Department> GetAllDepartmentsByName(string departmentName)
+        {
+            return _departmentRepository.Filter(new DepartmentNameSpecification(departmentName));
+        }
+
         public async Task CreateDepartment(string departmentName)
         {
             _departmentValidation.ValidateDepartmentName(departmentName);

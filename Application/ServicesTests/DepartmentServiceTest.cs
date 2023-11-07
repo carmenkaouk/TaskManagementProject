@@ -2,6 +2,7 @@
 using Application.Ports;
 using Application.Services;
 using Application.Services.Interfaces;
+using Application.Specifications.DepartmentSpecifications;
 using Application.Validation.Interfaces;
 using Moq;
 using NUnit.Framework;
@@ -42,6 +43,29 @@ namespace Application.ServicesTests
         }
 
         [Test]
+        public void GetDepartmentsByNameTest()
+        {
+            var depName = "It";
+            var departmentSpecification = new DepartmentNameSpecification(depName);
+
+            var expectedDepartments = new List<Department>
+            {
+                new Department { Id = 1, Name = "It" },
+                new Department { Id = 2, Name = "It" }
+            };
+
+            departmentRepositoryMock
+                .Setup(dep => dep.Filter(It.Is<DepartmentNameSpecification>(spec => spec.GetType() == departmentSpecification.GetType())))
+                .Returns(expectedDepartments);
+
+            List<Department> departments = departmentService.GetAllDepartmentsByName(depName);
+            
+            Assert.IsNotNull(departments);
+            Assert.AreEqual(2, departments.Count);
+        }
+
+
+            [Test]
         public void CreateDepartmentTest() 
         {
             string departmentName = "It";
