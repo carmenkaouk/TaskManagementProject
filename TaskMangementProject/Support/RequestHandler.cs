@@ -5,6 +5,10 @@ using SharedLibrary.FileService;
 using RequestResponse.Enums; 
 using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
+using System.Runtime.Intrinsics.Arm;
+using SharedLibrary.Encryption;
+using System.Text.Unicode;
+using System.Text;
 
 namespace Presentation.Support;
 
@@ -13,11 +17,13 @@ public class RequestHandler
     public MiddleWareManager _middleWareManager;
     private readonly IConfiguration _configuration;
     private readonly IFileService _fileService;
-    public RequestHandler(MiddleWareManager middleWareManager, IConfiguration configuration, IFileService fileService)
+    private readonly IServiceProvider _serviceProvider;
+    public RequestHandler(MiddleWareManager middleWareManager, IConfiguration configuration, IFileService fileService, IServiceProvider serviceProvider)
     {
         _middleWareManager = middleWareManager;
         _configuration = configuration;
         _fileService = fileService;
+        _serviceProvider = serviceProvider;
     }
     public FileSystemWatcher WatchRequests()
     {
@@ -32,13 +38,17 @@ public class RequestHandler
 
     private async void HandleRequests(object sender, FileSystemEventArgs e)
     {
-        Response response= new(); 
+        Response response= new();
+        FileContext fileContext= new(); 
         try
         {
             var content = await ReadFile(e);
             var headMiddleWare = _middleWareManager.ConstructPipeline();
-            var fileContext = new FileContext();
+            fileContext = new FileContext();
             fileContext.Add("JsonWrappedRequest", content);
+            fileContext.Add("ServiceProvider", _serviceProvider);
+
+
             response = headMiddleWare.ProcessRequest(fileContext);
         }
         catch (Exception ex)
@@ -49,9 +59,17 @@ public class RequestHandler
         }
         finally
         {
-            WriteResponse(response);
+            var encryptedResponse = EncryptResponse(response, (byte[])fileContext.data["SymmetricKey"],(byte[])fileContext.data["Iv"] ); 
+            await WriteResponse(encryptedResponse, ( (Request)fileContext.data["Request"]).SenderUsername,response.RequestId);
         }
 
+    }
+
+    private byte[] EncryptResponse(Response response, byte[] key, byte[] iv)
+    {
+        var responseAsJson = JsonConvert.SerializeObject(response);
+        byte[] responseASBytes= Encoding.UTF8.GetBytes(responseAsJson);
+        return AesEncryption.Encrypt(responseASBytes, key, iv); 
     }
 
     private async Task<string> ReadFile(FileSystemEventArgs e)
@@ -73,18 +91,18 @@ public class RequestHandler
         return content; 
     }
 
-    private void WriteResponse(Response response)
+    private async Task WriteResponse(byte[] response,string username, Guid requestId )
     {
         try
         {
             string filePath;
             var responseFolderPath = _configuration["FileDirectories:Responses"];
-            string fileName = response.RequestId.ToString();
+            string fileName = requestId.ToString();
             if (responseFolderPath != null)
             {
-                 filePath = Path.Combine(responseFolderPath, fileName);
-                 string JsonResponse =  JsonConvert.SerializeObject(response);
-                _fileService.WriteFile(filePath, JsonResponse);
+                 filePath = Path.Combine(responseFolderPath, username, fileName);
+                 
+                await _fileService.WriteByteArray(filePath, response);
             }
            
 

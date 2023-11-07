@@ -60,7 +60,7 @@ public class FileRequestSender : IRequestSender
     }
     private byte[] GetServerPublicKey()
     {
-        var publicKeyFile = _configuration["PublicKey"];
+        var publicKeyFile = _configuration["FileDirectories:PublicKey"];
         return File.ReadAllBytes(publicKeyFile);
     }
     private FileSystemWatcher WatchResponses(TaskCompletionSource<Response> tcs, string username, byte[] key, byte[] iv)

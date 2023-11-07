@@ -12,6 +12,8 @@ internal class DecryptionMiddleware : Middleware
     {
         WrappedRequest wrappedRequest = (WrappedRequest)fileContext.data["WrappedRequest"];
         byte[] symmetricKey = RsaEncryption.Decrypt(wrappedRequest.EncryptedSymmetricKey);
+        fileContext.Add("SymmetricKey", symmetricKey);
+        fileContext.Add("Iv", wrappedRequest.Iv);
         byte[] requestAsBytes = AesEncryption.Decrypt(wrappedRequest.EncryptedRequest, symmetricKey, wrappedRequest.Iv); 
         string requestAsJson = UTF8Encoding.UTF8.GetString(requestAsBytes);
         fileContext.Add("RequestAsJson", requestAsJson); 

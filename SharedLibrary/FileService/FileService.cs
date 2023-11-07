@@ -1,10 +1,13 @@
-﻿namespace SharedLibrary.FileService;
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace SharedLibrary.FileService;
 
 public interface IFileService
 {
     Task<string> ReadFile(string? path);
     Task<byte[]> ReadByteArray(string? path);
     Task WriteFile(string? path, string text);
+    Task WriteByteArray(string? path, byte[] bytes);
     void ValidatePath(string? path);
     void CreateFile(string path);
     void CreateDirectoryIfMissing(string? path);
@@ -59,8 +62,19 @@ public class FileService : IFileService
     }
     public void CreateDirectoryIfMissing(string? path)
     {
-        ValidatePath(path);
         Directory.CreateDirectory(path);
     }
 
+    public async Task WriteByteArray(string? path, byte[] bytes)
+    {
+        if (Directory.Exists(Path.GetDirectoryName(path)))
+        {
+            await File.WriteAllBytesAsync(path, bytes);
+        }
+        else
+        {
+
+            throw new DirectoryNotFoundException();
+        }
+    }
 }

@@ -19,7 +19,7 @@ internal class MethodResolutionMiddleware : Middleware
         var controllerName = routePieces.ServiceName;
         var methodName = routePieces.MethodName;
 
-        Type controllerType = Assembly.GetExecutingAssembly().GetType(controllerName+"Controller")!;
+        Type controllerType = Assembly.GetExecutingAssembly().GetType("Presentation.Controllers." + controllerName + "Controller"); 
         if (controllerType == null || !controllerType.IsClass)
         {
             throw new Exception("Controller not found");

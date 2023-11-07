@@ -16,6 +16,8 @@ using System.Reflection;
 using DTOs;
 using Persistence.Interfaces;
 using Persistence.Database;
+using System.Security.Cryptography;
+using SharedLibrary.Encryption;
 
 var builder = new ConfigurationBuilder();
 builder.SetBasePath(Directory.GetCurrentDirectory())
@@ -44,6 +46,8 @@ var serviceProvider = new ServiceCollection()
             .AddSingleton(config)
             .BuildServiceProvider();
 
-RequestHandler requestHandler = new RequestHandler(new MiddleWareManager(),config, new FileService());
+RequestHandler requestHandler = new RequestHandler(new MiddleWareManager(),config, new FileService(), serviceProvider);
 var watcher = requestHandler.WatchRequests();
+var fileService= (FileService)serviceProvider.GetService(typeof(IFileService));
+await fileService.WriteByteArray("C:\\Root\\ServerPublicKey.txt", RsaEncryption.ExportPublicKey()); 
 Console.ReadLine(); 
