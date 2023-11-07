@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.DepartmentSpecifications
 {
-    internal class DepartmentNameSpecification: Specification<Department>
+    public class DepartmentNameSpecification: Specification<Department>
     {
         private readonly string _departmentName;
         public DepartmentNameSpecification(string departmentName)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.TaskToDoSpecification
 {
-    internal class TaskByPrioritySpecification: Specification<TaskToDo>
+    public class TaskByPrioritySpecification: Specification<TaskToDo>
     {
         private readonly Priority _priority; 
         public TaskByPrioritySpecification(Priority priority)

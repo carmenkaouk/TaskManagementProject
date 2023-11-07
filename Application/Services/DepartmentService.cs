@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.Ports;
+using Application.Services.Interfaces;
 using Application.Validation.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class DepartmentService
+    public class DepartmentService:IDepartmentService
     {
         private readonly IRepository<Department> _departmentRepository;
         private readonly IDepartmentValidation _departmentValidation;

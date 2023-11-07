@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories; 
 
-internal class FileUserRepository : IRepository<User>
+public  class FileUserRepository : IRepository<User>
 {
     AbstractDatabaseManager _database;
 

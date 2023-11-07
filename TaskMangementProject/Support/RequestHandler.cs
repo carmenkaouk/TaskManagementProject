@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using RequestResponse;
 using SharedLibrary.FileService;
+using RequestResponse.Enums; 
+using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 
 namespace Presentation.Support;
@@ -30,31 +32,47 @@ public class RequestHandler
 
     private async void HandleRequests(object sender, FileSystemEventArgs e)
     {
+        Response response= new(); 
         try
         {
-            while (true)
-            {
-                try
-                {
-                    string content = await _fileService.ReadFile(e.FullPath);
-                    var headMiddleWare = _middleWareManager.ConstructPipeline();
-                    var fileContext = new FileContext();
-                    fileContext.Add("JsonWrappedRequest", content);
-                    Response response = headMiddleWare.ProcessRequest(fileContext);
-                    break;
-                }
-                catch (IOException ex)
-                {
-                    Console.Write(ex);
-                    await Task.Delay(100);
-                }
-            }
+            var content = await ReadFile(e);
+            var headMiddleWare = _middleWareManager.ConstructPipeline();
+            var fileContext = new FileContext();
+            fileContext.Add("JsonWrappedRequest", content);
+            response = headMiddleWare.ProcessRequest(fileContext);
         }
         catch (Exception ex)
         {
+            response.StatusCode = StatusCodes.Exception; 
+            response.ExceptionMessage = ex.Message;
             Console.Error.WriteLine($"Error reading file: {ex.Message}");
         }
+        finally
+        {
+            WriteResponse(response);
+        }
+
     }
+
+    private async Task<string> ReadFile(FileSystemEventArgs e)
+    {
+        string content = string.Empty; 
+        while (true)
+        {
+            try
+            {
+                content = await _fileService.ReadFile(e.FullPath);
+                break;
+            }
+            catch (IOException ex)
+            {
+                Console.Write(ex);
+                await Task.Delay(100);
+            }
+        }
+        return content; 
+    }
+
     private void WriteResponse(Response response)
     {
         try
@@ -73,7 +91,7 @@ public class RequestHandler
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex);
+            Console.Error.WriteLine(ex); 
         }
     }
 }

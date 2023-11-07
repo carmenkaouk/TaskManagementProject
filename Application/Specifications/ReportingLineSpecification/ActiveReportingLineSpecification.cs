@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.ReportingLineSpecification
 {
-    internal class ActiveReportingLineSpecification: Specification<ReportingLine>
+    public class ActiveReportingLineSpecification: Specification<ReportingLine>
     {
   
         public override Expression<Func<ReportingLine, bool>> ToExpression()

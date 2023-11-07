@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Specifications.ReportingLineSpecification
 {
-    internal class ReportingLineManagerSpecification : Specification<ReportingLine>
+    public class ReportingLineManagerSpecification : Specification<ReportingLine>
     {
         private readonly int _managerId ;
         public ReportingLineManagerSpecification(int managerId)
