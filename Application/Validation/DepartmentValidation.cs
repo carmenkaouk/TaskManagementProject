@@ -38,7 +38,7 @@ public class DepartmentValidation : IDepartmentValidation
 
     {
         var department = _departmentRepository.Filter(new DepartmentNameSpecification(departmentName));
-        if (department != null)
+        if (department.Count()!= 0)
         {
             throw new Exception($"Department with name {departmentName} already exists");
         }

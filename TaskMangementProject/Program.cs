@@ -12,6 +12,10 @@ using Application.Validation;
 using Microsoft.Extensions.Configuration;
 using Presentation.Support;
 using Infrastructure;
+using System.Reflection;
+using DTOs;
+using Persistence.Interfaces;
+using Persistence.Database;
 
 var builder = new ConfigurationBuilder();
 builder.SetBasePath(Directory.GetCurrentDirectory())
@@ -19,7 +23,6 @@ builder.SetBasePath(Directory.GetCurrentDirectory())
 
 IConfiguration config = builder.Build();
 
-Console.WriteLine("Hello, World!");
 var serviceProvider = new ServiceCollection()
             .AddSingleton<IFileService, FileService>()
             .AddSingleton<IRepository<User>, FileUserRepository>()
@@ -28,6 +31,8 @@ var serviceProvider = new ServiceCollection()
             .AddSingleton<IRepository<ReportingLine>, FileReportingLineRepository>()
             .AddSingleton<IHashingService, SHA256HashingService>()
             .AddTransient<UserController, UserController>()
+            .AddSingleton<AbstractDatabaseManager, DatabaseManager>()
+            .AddTransient<IReportingLineService, ReportingLineService>()
             //.AddTransient<TaskController, TaskController>()
             //.AddTransient<DepartmentController, DepartmentController>()
             .AddTransient<IUserService, UserService>()
